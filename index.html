@@ -1,0 +1,541 @@
+<title>Energy Assessment</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700&family=Lato:ital,wght@0,300;1,300&display=swap">
+
+<style>
+  :root {
+    --dark:        #1C1208;
+    --cream:       #F8EDE6;
+    --cream-mid:   #EDE3DB;
+    --taupe:       #907D6C;
+    --taupe-dark:  #6B5C4E;
+    --amber:       #C8922A;
+    --text-body:   #5A4030;
+    --text-script: #8A7060;
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Lato', Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 32px 48px;
+  }
+
+  a { color: var(--amber); text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  /* ── EMAIL SHELL ── */
+  .email-shell {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--cream);
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.45);
+  }
+
+  /* ── HEADER ── */
+  .email-header {
+    background: var(--dark);
+    text-align: center;
+    padding: 32px 40px 28px;
+    border-bottom: 2px solid var(--amber);
+  }
+  .header-brand {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 6px;
+  }
+  .header-tagline {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  /* ── BODY ── */
+  .email-body {
+    padding: 40px 48px 36px;
+    background: var(--cream);
+  }
+
+  .category-label {
+    display: block;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+  }
+
+  .email-headline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--dark);
+    margin-bottom: 16px;
+    text-wrap: balance;
+  }
+
+  .intro-text {
+    font-family: 'Lato', Georgia, serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-body);
+    margin-bottom: 32px;
+    font-style: italic;
+  }
+
+  /* ── QUIZ FORM ── */
+  .quiz-form { display: flex; flex-direction: column; gap: 28px; }
+
+  .question-block {
+    border-top: 1px solid rgba(200,146,42,0.20);
+    padding-top: 24px;
+  }
+
+  .question-number {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .question-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--dark);
+    margin-bottom: 16px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    padding: 10px 14px;
+    border-radius: 2px;
+    border: 1px solid rgba(200,146,42,0.18);
+    transition: background 0.15s, border-color 0.15s;
+    background: rgba(255,255,255,0.5);
+  }
+  .option-label:hover { background: rgba(200,146,42,0.07); border-color: rgba(200,146,42,0.35); }
+
+  .option-label input[type="radio"] { display: none; }
+
+  .option-label.selected {
+    background: rgba(200,146,42,0.12);
+    border-color: var(--amber);
+  }
+
+  .option-dot {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    border-radius: 50%;
+    border: 1.5px solid var(--taupe);
+    margin-top: 2px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .option-label.selected .option-dot {
+    border-color: var(--amber);
+    background: var(--amber);
+  }
+
+  .option-text {
+    font-family: 'Lato', Georgia, serif;
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--text-body);
+  }
+
+  /* ── SUBMIT ── */
+  .submit-wrap {
+    padding-top: 32px;
+    border-top: 1px solid rgba(200,146,42,0.20);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .submit-btn {
+    background: var(--amber);
+    color: var(--dark);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .submit-btn:hover { opacity: 0.88; }
+  .submit-btn:disabled { opacity: 0.4; cursor: default; }
+
+  .submit-note {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-script);
+  }
+
+  /* ── RESULT BLOCK ── */
+  .result-block {
+    display: none;
+    background: var(--dark);
+    padding: 36px 40px;
+    margin-top: 32px;
+    border-radius: 2px;
+  }
+  .result-block.visible { display: block; }
+
+  .result-score-line {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 12px;
+  }
+
+  .result-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--cream);
+    margin-bottom: 18px;
+  }
+
+  .result-text {
+    font-family: 'Lato', Georgia, serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--cream-mid);
+    margin-bottom: 14px;
+  }
+
+  .result-close {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--amber);
+    margin-top: 18px;
+    line-height: 1.5;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(200,146,42,0.25);
+    margin: 32px 0;
+  }
+
+  /* ── SIGNATURE ── */
+  .email-signature {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    margin-top: 32px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(200,146,42,0.35);
+  }
+  .sig-name  { color: var(--dark); font-weight: 400; }
+  .sig-pipe  { color: var(--text-script); margin: 0 6px; font-weight: 300; }
+  .sig-brand { color: var(--amber); font-weight: 400; }
+
+  /* ── FOOTER ── */
+  .email-footer {
+    background: var(--dark);
+    padding: 28px 40px;
+    text-align: center;
+    border-top: 1px solid rgba(200,146,42,0.12);
+  }
+  .footer-text {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: rgba(248,237,230,0.35);
+    margin-bottom: 8px;
+  }
+  .footer-links a {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 10px;
+    color: rgba(248,237,230,0.30);
+    text-decoration: underline;
+    margin: 0 6px;
+  }
+
+  /* ── SUBJECT/PREHEADER META ── */
+  .meta-bar {
+    max-width: 600px;
+    margin: 0 auto 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .meta-subject {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(248,237,230,0.45);
+  }
+  .meta-subject span { color: rgba(248,237,230,0.75); }
+  .meta-preheader {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(200,146,42,0.65);
+  }
+
+  @media (max-width: 480px) {
+    body { padding-block: 16px 32px; }
+    .email-body { padding: 28px 24px 24px; }
+    .email-header { padding: 24px 20px 20px; }
+    .email-footer { padding: 20px 20px; }
+    .email-headline { font-size: 24px; }
+    .result-block { padding: 24px 20px; }
+  }
+</style>
+
+<!-- Subject / preheader reference -->
+<div class="meta-bar">
+  <div class="meta-subject">Subject: <span>Two minutes. An honest read on where you actually are.</span></div>
+  <div class="meta-preheader">Preheader: <em>Your score won't surprise you. What it points to might.</em></div>
+</div>
+
+<div class="email-shell">
+
+  <!-- Header -->
+  <div class="email-header">
+    <div class="header-brand">Earth Energetics</div>
+    <div class="header-tagline">Healing energy from nature to you</div>
+  </div>
+
+  <!-- Body -->
+  <div class="email-body">
+
+    <span class="category-label">Assessment</span>
+
+    <h1 class="email-headline">Where Does Your Energy Actually Stand?</h1>
+
+    <p class="intro-text">Seven questions. Two minutes. An honest read on what your body and energy have been carrying.</p>
+
+    <form class="quiz-form" id="quizForm" onsubmit="return false;">
+
+      <!-- Q1 -->
+      <div class="question-block">
+        <span class="question-number">Question 01</span>
+        <div class="question-text">How often do you wake up feeling genuinely rested?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q1" value="1"><span class="option-dot"></span><span class="option-text">Almost always</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="2"><span class="option-dot"></span><span class="option-text">Some mornings, not most</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="3"><span class="option-dot"></span><span class="option-text">Rarely</span></label>
+          <label class="option-label"><input type="radio" name="q1" value="4"><span class="option-dot"></span><span class="option-text">Almost never — sleep doesn't restore me</span></label>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-block">
+        <span class="question-number">Question 02</span>
+        <div class="question-text">How would you describe your physical energy across a typical day?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q2" value="1"><span class="option-dot"></span><span class="option-text">Steady and sufficient</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="2"><span class="option-dot"></span><span class="option-text">Starts OK, fades by afternoon</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="3"><span class="option-dot"></span><span class="option-text">Inconsistent — I push through more than I flow</span></label>
+          <label class="option-label"><input type="radio" name="q2" value="4"><span class="option-dot"></span><span class="option-text">Depleted most of the time</span></label>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-block">
+        <span class="question-number">Question 03</span>
+        <div class="question-text">How much mental fog, distraction, or difficulty concentrating do you experience?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q3" value="1"><span class="option-dot"></span><span class="option-text">Very little</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="2"><span class="option-dot"></span><span class="option-text">Occasional and manageable</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="3"><span class="option-dot"></span><span class="option-text">Frequent — it affects my work or relationships</span></label>
+          <label class="option-label"><input type="radio" name="q3" value="4"><span class="option-dot"></span><span class="option-text">It's become my baseline</span></label>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-block">
+        <span class="question-number">Question 04</span>
+        <div class="question-text">When something emotionally difficult happens, how long does it take you to return to equilibrium?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q4" value="1"><span class="option-dot"></span><span class="option-text">A few hours at most</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="2"><span class="option-dot"></span><span class="option-text">A day or two</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="3"><span class="option-dot"></span><span class="option-text">Several days, sometimes longer</span></label>
+          <label class="option-label"><input type="radio" name="q4" value="4"><span class="option-dot"></span><span class="option-text">I'm not sure I fully return anymore</span></label>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-block">
+        <span class="question-number">Question 05</span>
+        <div class="question-text">Think about the main health or energy challenge you've been carrying. How long has it been present?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q5" value="1"><span class="option-dot"></span><span class="option-text">Less than six months</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="2"><span class="option-dot"></span><span class="option-text">Six months to a year</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="3"><span class="option-dot"></span><span class="option-text">One to three years</span></label>
+          <label class="option-label"><input type="radio" name="q5" value="4"><span class="option-dot"></span><span class="option-text">More than three years</span></label>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-block">
+        <span class="question-number">Question 06</span>
+        <div class="question-text">How much have the approaches you've tried — conventional or alternative — actually moved the needle?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q6" value="1"><span class="option-dot"></span><span class="option-text">Significantly — I'm mostly where I want to be</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="2"><span class="option-dot"></span><span class="option-text">Somewhat — some relief, but the core issue remains</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="3"><span class="option-dot"></span><span class="option-text">Minimally — temporary or partial results at best</span></label>
+          <label class="option-label"><input type="radio" name="q6" value="4"><span class="option-dot"></span><span class="option-text">Not meaningfully — I've been managing, not healing</span></label>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question-block">
+        <span class="question-number">Question 07</span>
+        <div class="question-text">Have you ever tried any form of energy healing?</div>
+        <div class="options">
+          <label class="option-label"><input type="radio" name="q7" value="1"><span class="option-dot"></span><span class="option-text">No, it's not something I've explored</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="2"><span class="option-dot"></span><span class="option-text">I've been curious but haven't tried it</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="3"><span class="option-dot"></span><span class="option-text">I've tried it once or a few times without lasting results</span></label>
+          <label class="option-label"><input type="radio" name="q7" value="4"><span class="option-dot"></span><span class="option-text">Yes, seriously — even energy work hasn't fully resolved it</span></label>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <div class="submit-wrap">
+        <button class="submit-btn" id="submitBtn" type="button" onclick="calculateScore()">See My Result</button>
+        <span class="submit-note" id="submitNote"></span>
+      </div>
+
+      <!-- Result -->
+      <div class="result-block" id="resultBlock">
+        <div class="result-score-line" id="resultScoreLine"></div>
+        <div class="result-title" id="resultTitle"></div>
+        <p class="result-text" id="resultText"></p>
+        <p class="result-close">That's what the next few emails are about.</p>
+      </div>
+
+    </form>
+
+    <hr class="divider">
+
+    <div class="email-signature">
+      <span class="sig-name">Fran&ccedil;oise Becquey</span><span class="sig-pipe">|</span><span class="sig-brand">Earth Energetics</span>
+    </div>
+
+  </div><!-- /email-body -->
+
+  <!-- Footer -->
+  <div class="email-footer">
+    <p class="footer-text">
+      Earth Energetics &middot; UB Health Studio<br>
+      Ohio, USA &middot; earthenergetics.org
+    </p>
+    <p class="footer-links">
+      <a href="#">Unsubscribe</a> &middot; <a href="#">View in browser</a>
+    </p>
+  </div>
+
+</div><!-- /email-shell -->
+
+<script>
+  // Highlight selected option
+  document.querySelectorAll('.option-label').forEach(label => {
+    label.addEventListener('click', () => {
+      const name = label.querySelector('input').name;
+      document.querySelectorAll(`.option-label input[name="${name}"]`).forEach(inp => {
+        inp.closest('.option-label').classList.remove('selected');
+      });
+      label.classList.add('selected');
+      label.querySelector('input').checked = true;
+      document.getElementById('submitNote').textContent = '';
+    });
+  });
+
+  function calculateScore() {
+    const questions = ['q1','q2','q3','q4','q5','q6','q7'];
+    let score = 0;
+    let unanswered = 0;
+
+    questions.forEach(q => {
+      const checked = document.querySelector(`input[name="${q}"]:checked`);
+      if (checked) {
+        score += parseInt(checked.value);
+      } else {
+        unanswered++;
+      }
+    });
+
+    if (unanswered > 0) {
+      document.getElementById('submitNote').textContent =
+        unanswered === 1 ? 'One question still needs an answer.' :
+        `${unanswered} questions still need an answer.`;
+      return;
+    }
+
+    const resultBlock  = document.getElementById('resultBlock');
+    const scoreLine    = document.getElementById('resultScoreLine');
+    const resultTitle  = document.getElementById('resultTitle');
+    const resultText   = document.getElementById('resultText');
+
+    scoreLine.textContent = `Your score: ${score} out of 28`;
+
+    let title, text;
+
+    if (score <= 12) {
+      title = 'Your foundation is holding — but signals are accumulating.';
+      text  = 'Your energy is functional, but your body is flagging things your daily routine hasn\'t resolved. What you\'ve tried has kept things manageable. It hasn\'t cleared the underlying cause.';
+    } else if (score <= 19) {
+      title = 'Your system is working harder than it should.';
+      text  = 'The gap between how you feel and how you want to feel has been open long enough that it\'s become normal. The approaches that brought you here won\'t close it. Something at a different level needs to shift.';
+    } else {
+      title = 'Your energy has been carrying a significant load, probably for a long time.';
+      text  = 'The score isn\'t a diagnosis — it\'s a reflection. What it shows is that the strategies, supplements, or modalities you\'ve relied on have been managing symptoms, not addressing what\'s underneath them. That\'s not a failure on your part. It means the root is somewhere those approaches don\'t reach.';
+    }
+
+    resultTitle.textContent = title;
+    resultText.textContent  = text;
+    resultBlock.classList.add('visible');
+    resultBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
