@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Body Mirror</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@400;600;700&family=Lato:wght@300;400&display=swap">
+<style>
+  :root {
+    --dark:        #1C1208;
+    --cream:       #F8EDE6;
+    --cream-mid:   #EDE3DB;
+    --taupe:       #907D6C;
+    --amber:       #C8922A;
+    --text-body:   #3A2010;
+    --text-light:  rgba(248,237,230,0.40);
+    color-scheme: light;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    font-family: 'Lato', Georgia, serif;
+    -webkit-font-smoothing: antialiased;
+    padding-left:  max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 64px;
+  }
+
+  a { color: var(--amber); text-decoration: none; }
+
+  /* CARD */
+  .card {
+    max-width: 640px;
+    margin: 0 auto;
+    background: var(--cream);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--dark);
+    border-bottom: 2px solid var(--amber);
+    text-align: center;
+    padding: 32px 40px 26px;
+  }
+  .brand {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 5px;
+  }
+  .brand-sub {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 8.5px;
+    font-weight: 400;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--taupe);
+  }
+
+  /* BODY */
+  .body {
+    padding: 48px 52px 52px;
+  }
+
+  .page-eyebrow {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 10px;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--taupe);
+    margin-bottom: 36px;
+    line-height: 1.4;
+  }
+
+  .intro p {
+    font-family: 'Lato', Georgia, serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.80;
+    color: var(--text-body);
+    margin-bottom: 18px;
+  }
+
+  .start-anywhere {
+    font-family: 'Lato', Georgia, serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.80;
+    color: var(--text-body);
+    margin: 28px 0 8px;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid rgba(200,146,42,0.20);
+    margin: 36px 0;
+  }
+
+  /* EXERCISE SECTION */
+  .exercise-prompt {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.55;
+    margin-bottom: 28px;
+    text-wrap: balance;
+  }
+
+  .reflection-label {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 280px;
+    background: #FFFFFF;
+    border: 1px solid rgba(144,125,108,0.30);
+    border-radius: 3px;
+    padding: 18px 20px;
+    font-family: 'Lato', Georgia, serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--dark);
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea::placeholder {
+    color: rgba(90,64,48,0.35);
+    font-style: italic;
+  }
+  textarea:focus {
+    border-color: rgba(200,146,42,0.50);
+  }
+
+  /* BUTTONS */
+  .action-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  .btn-copy {
+    background: var(--amber);
+    color: var(--dark);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn-copy:hover { opacity: 0.85; }
+
+  .btn-print {
+    background: transparent;
+    color: var(--dark);
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    border: 1px solid rgba(28,18,8,0.25);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .btn-print:hover { border-color: var(--amber); }
+
+  .copy-confirm {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--taupe);
+    align-self: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .copy-confirm.visible { opacity: 1; }
+
+  /* HANDWRITING CALLOUT */
+  .handwriting-callout {
+    background: var(--dark);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 2px 2px 0;
+    padding: 28px 32px;
+    margin-top: 40px;
+  }
+  .callout-heading {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 16px;
+  }
+  .handwriting-callout p {
+    font-family: 'Lato', Georgia, serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.80;
+    color: rgba(248,237,230,0.70);
+    margin-bottom: 14px;
+  }
+  .handwriting-callout p:last-child { margin-bottom: 0; }
+
+  /* SIGNATURE */
+  .sig {
+    margin-top: 44px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(200,146,42,0.25);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 14px;
+    color: var(--text-body);
+  }
+  .sig-name { font-weight: 600; color: var(--dark); }
+  .sig-pipe { color: var(--amber); margin: 0 7px; }
+  .sig-brand { color: var(--taupe); font-weight: 400; }
+
+  /* FOOTER */
+  .site-footer {
+    background: var(--dark);
+    text-align: center;
+    padding: 24px 40px;
+    border-top: 1px solid rgba(200,146,42,0.10);
+  }
+  .site-footer p {
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-size: 9.5px;
+    font-weight: 400;
+    line-height: 1.9;
+    color: var(--text-light);
+  }
+
+  /* PRINT */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card { box-shadow: none; border-radius: 0; }
+    .site-header { background: #fff; border-bottom: 1px solid #ccc; }
+    .brand { color: #1C1208; }
+    .brand-sub { color: #666; }
+    .action-row, .handwriting-callout { display: none; }
+    textarea { min-height: 80vh; border: 1px solid #ccc; }
+    .site-footer { background: #fff; }
+    .site-footer p { color: #999; }
+  }
+
+  @media (max-width: 520px) {
+    .body { padding: 36px 28px 40px; }
+    .site-header { padding: 28px 24px 22px; }
+    h1 { font-size: 28px; }
+    .handwriting-callout { padding: 22px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <header class="site-header">
+    <div class="brand">Earth Energetics</div>
+    <div class="brand-sub">Healing energy from nature to you</div>
+  </header>
+
+  <div class="body">
+
+    <span class="page-eyebrow">Reflection Exercise</span>
+    <h1>The Body Mirror</h1>
+    <p class="subtitle">An honest look at what you already know but haven't said out loud yet.</p>
+
+    <div class="intro">
+      <p>This is not a questionnaire. There are no right answers here, no framework to complete, no score at the end. This page is simply a place to write, without the audience of a spreadsheet, a coach, or a plan. What you write belongs to you. Nothing is sent anywhere.</p>
+
+      <p>So, be daring. Be honest. Be inventive, creative. Don't be afraid of words or thoughts you don't want to hear. Just write.</p>
+
+      <p class="start-anywhere">Start anywhere. The appointment you keep not making. The symptom you have stopped describing to anyone. The treatment you know is not working but haven't stopped. The conversation you've been meaning to have with someone. The part of your body you're quietly building your life around instead of addressing.</p>
+
+      <p>Some people spend five minutes and find one honest sentence. Others fill three pages and realize what they have been organizing their whole life around.</p>
+    </div>
+
+    <hr class="divider">
+
+    <p class="exercise-prompt">Write until you find the sentence you didn't plan to write. That's usually the one that matters.</p>
+
+    <label class="reflection-label" for="reflection">Your reflection</label>
+    <textarea id="reflection" placeholder="Write what comes. Don't edit as you go."></textarea>
+
+    <div class="action-row">
+      <button class="btn-copy" onclick="copyNotes()">Copy my notes</button>
+      <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+      <span class="copy-confirm" id="copyConfirm">Copied.</span>
+    </div>
+
+    <div class="handwriting-callout">
+      <p class="callout-heading">If you'd rather do this by hand, print this page.</p>
+      <p>There's a reason handwriting surfaces things that typing doesn't. When you write by hand, your brain processes at a slower speed, which means your thoughts have to form more deliberately before they reach the page. The internal editor, the one that tidies your thinking before it becomes visible, has less time to intervene.</p>
+      <p>Studies on expressive writing consistently show that handwriting produces more emotionally honest and specific output than typing. The friction is the point. It slows you down enough to catch what you were about to skip over.</p>
+      <p>Use the Print button above. The text area will expand to fill the printed page, blank and ready.</p>
+    </div>
+
+    <div class="sig">
+      <span class="sig-name">Fran&ccedil;oise Becquey</span><span class="sig-pipe">|</span><span class="sig-brand">Earth Energetics</span>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>Earth Energetics &middot; UB Health Studio<br>Ohio, USA &middot; earthenergetics.org</p>
+  </footer>
+
+</div>
+
+<script>
+function copyNotes() {
+  const text = document.getElementById('reflection').value;
+  if (!text.trim()) return;
+  try {
+    navigator.clipboard.writeText(text).then(() => {
+      showConfirm();
+    }).catch(() => {
+      fallbackCopy(text);
+    });
+  } catch(e) {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.getElementById('reflection');
+  ta.select();
+  try { document.execCommand('copy'); showConfirm(); } catch(e) {}
+}
+
+function showConfirm() {
+  const el = document.getElementById('copyConfirm');
+  el.classList.add('visible');
+  setTimeout(() => el.classList.remove('visible'), 2200);
+}
+</script>
+
+</body>
+</html>
